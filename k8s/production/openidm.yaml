@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: openidm
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: openidm
+    spec:
+      containers:
+      - name: openidm
+        image: forgerock/openidm:template
+        ports:
+          - containerPort: 8080

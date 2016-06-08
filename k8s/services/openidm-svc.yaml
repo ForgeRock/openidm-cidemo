@@ -1,0 +1,13 @@
+# Run OpenIDM on k8
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: openidm
+spec:
+  selector:
+    name: openidm
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080

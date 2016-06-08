@@ -1,0 +1,49 @@
+# Ingress for our components
+# Note that the nginx ingress path /foo matches /foo, /foo/bar etc.
+# To get the equivalent on GCE ingress you need two rules /foo and /foo/*
+# Nginx seems OK to ignore the extra *
+#
+# NOTE: The openidm ingress does not work right now on GCE
+# The default health checker requires a 200 response on the / URL of the app
+# but openidm is not configured with anything on / (selfservice is moved to /idmselfservice)
+# The manual workaround is to edit the GCE compute health check and change the
+# Test URL to /idmselfservice
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: openam
+spec:
+  rules:
+# Unless you want to use hostname based ingress, it is better to leave the
+# Hostname out so it works for all incoming hosts
+# If you are forwarding from another load balancer, make
+# sure the LB sets the appropiate X-forwarded headers
+# See for example:
+# http://serverfault.com/questions/598202/make-nginx-to-pass-hostname-of-the-upstream-when-reverseproxying
+#  - host: test.my2do.com
+   - http:
+      paths:
+      - path: /openidm/*
+       backend:
+         serviceName: openidm
+         servicePort: 80
+      - path: /openidm
+       backend:
+         serviceName: openidm
+         servicePort: 80
+      - path: /admin
+       backend:
+         serviceName: openidm
+         servicePort: 80
+      - path: /admin/*
+       backend:
+         serviceName: openidm
+         servicePort: 80
+      - path: /idmselfservice
+       backend:
+         serviceName: openidm
+         servicePort: 80
+      - path: /idmselfservice/*
+       backend:
+         serviceName: openidm
+         servicePort: 80   servicePort: 80
