@@ -12,7 +12,7 @@ spec:
          name: opendj
     spec:
       containers:
-      - name: opendjx
+      - name: opendj
         image: forgerock/opendj:latest
         #imagePullPolicy: Always
         ports:

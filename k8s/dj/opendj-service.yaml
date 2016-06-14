@@ -5,7 +5,7 @@ metadata:
 spec:
   ports:
     - port: 389
-      targetPort: ldap
+      targetPort: 389
       protocol: "TCP"
       name: opendj-389
   selector:

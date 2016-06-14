@@ -12,5 +12,6 @@ spec:
       containers:
       - name: openidm
         image: forgerock/openidm:template
+        imagePullPolicy: Always
         ports:
           - containerPort: 8080
