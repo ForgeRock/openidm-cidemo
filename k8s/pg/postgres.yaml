@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
       - name: postgres
-        image: forgerock/openidm-postgres
+        image: forgerock/openidm-postgres:jun14
         ports:
         - containerPort: 5432
         env:
@@ -36,12 +36,12 @@ spec:
             value: openidm
           - name: POSTGRES_USER
             value: openidm
-        volumeMounts:
-          - name: pgdata
-            mountPath: /var/lib/postgresql/data/pgdata
+#        volumeMounts:
+#          - name: pgdata
+#            mountPath: /var/lib/postgresql/data/pgdata
       # This works for a single node only
       # To clean up the data log in to the host and rm -fr /var/tmp/pgdata
-      volumes:
-        - name: pgdata
-          persistentVolumeClaim:
-                   claimName: postgres-storage
+#      volumes:
+#        - name: pgdata
+#          persistentVolumeClaim:
+#                   claimName: postgres-storage
