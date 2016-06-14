@@ -3,36 +3,31 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  labels:
-    name: opendj
   name: opendj
 spec:
   replicas: 1
-  selector:
-    name: opendj
   template:
     metadata:
       labels:
          name: opendj
     spec:
       containers:
-      - name: opendj
-        image: forgerock/opendj:nightly
-        imagePullPolicy: Always
+      - name: opendjx
+        image: forgerock/opendj:latest
+        #imagePullPolicy: Always
         ports:
-        - name: ldap
-          containerPort: 389
+        - containerPort: 389
           protocol: TCP
         volumeMounts:
           - name: secrets
             mountPath: /var/secrets
-            readOnly: true
-          - name: opendj-disk
-            mountPath: /opt/opendj/data
+#            readOnly: true
+#          - name: opendj-disk
+#            mountPath: /opt/opendj/data
       volumes:
         - name: secrets
           secret:
             secretName: fr-secrets
-        - name: opendj-disk
-          persistentVolumeClaim:
-            claimName: opendj-storage
+#        - name: opendj-disk
+#          persistentVolumeClaim:
+#            claimName: opendj-storage

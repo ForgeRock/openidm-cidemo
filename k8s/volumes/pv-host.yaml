@@ -1,0 +1,46 @@
+# Host Path based PVs - for testing only!
+# This will only work on a single node cluster
+# For a "real" cluster you need to create PVs that are available across nodes
+# See the Kube docs on creating PVs
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data01
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /tmp/kube/data01
+  persistentVolumeReclaimPolicy: Recycle
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data02
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/kube/data02"
+  persistentVolumeReclaimPolicy: Recycle
+
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data03
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/kube/data03"
+  persistentVolumeReclaimPolicy: Recycle
+
