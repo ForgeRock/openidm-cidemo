@@ -21,6 +21,10 @@ node {
  // Create prod namespace if it doesn't exist
  sh("kubectl get ns production || kubectl create ns production")
 
+ // create this namespace
+
+
+
   switch (env.BRANCH_NAME) {
     // canary deployment to production
     // TOOD: Revist this once we have multi-node deployment
@@ -39,10 +43,15 @@ node {
 
     // Roll out to production
     case "production":
+       // deploy dependent apps
+       sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/pg")
+       sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/dj")
+
         // Change deployed image in staging to the one we just built
         sh("sed -i.bak 's#${templateImage}#${imageTag}#' ./k8s/production/*.yaml")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/services/")
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/production/")
+
         // For prod we want an ingress
         sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/ingress/")
         //sh("echo http://`kubectl --namespace=production get service/${feSvcName} --output=json | jq -r '.status.loadBalancer.ingress[0].ip'` > ${feSvcName}")
@@ -50,8 +59,12 @@ node {
 
     // Roll out a dev (master) or feature branch environment. Each env gets its own namespace
     default:
-        // Create dev branch namespace if it doesn't exist
+        // Create branch namespace if it doesn't exist
         sh("kubectl get ns ${env.BRANCH_NAME} || kubectl create ns ${env.BRANCH_NAME}")
+        // deploy dependent apps
+        sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/pg")
+        sh("kubectl --namespace=${env.BRANCH_NAME} apply -f k8s/dj")
+
         // Don't use public load balancing for development branches
         sh("sed -i.bak 's#LoadBalancer#ClusterIP#' ./k8s/services/openidm-svc.yaml")
         sh("sed -i.bak 's#${templateImage}#${imageTag}#' ./k8s/dev/*.yaml")

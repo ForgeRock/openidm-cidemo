@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: opendj
+spec:
+  ports:
+    - port: 389
+      targetPort: ldap
+      protocol: "TCP"
+      name: opendj-389
+  selector:
+    name: opendj
