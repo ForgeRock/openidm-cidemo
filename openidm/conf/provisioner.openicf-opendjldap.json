@@ -68,7 +68,7 @@
         "accountUserNameAttributes" : [
             "uid"
         ],
-        "host" : "localhost",
+        "host" : "opendj",
         "groupMemberAttribute" : "uniqueMember",
         "accountSearchFilter" : null,
         "passwordHashAlgorithm" : null,

@@ -10,8 +10,6 @@ node {
   checkout scm
 
   stage 'Build image'
-  // not sure why this is needed - but it seems to use the cache if we dont pull the image
-  sh("docker pull forgerock/openidm")
 
   sh("docker build --no-cache -t ${imageTag} openidm")
 

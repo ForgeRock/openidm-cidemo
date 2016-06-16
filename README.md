@@ -47,3 +47,10 @@ The branching model is:
 There is a "canary" branch concept (currently not working) but the eventual intent is to 
 replace one of N instances in production with a canary container.
 
+
+
+TODO:
+- SSL and passwords secrets 
+    DJ - certificate in provisioner 
+    See https://forgerock.org/openidm/doc/bootstrap/integrators-guide/#import-opendj-cert 
+- Health checks for Deployments

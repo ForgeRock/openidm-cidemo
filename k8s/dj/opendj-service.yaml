@@ -8,5 +8,8 @@ spec:
       targetPort: 389
       protocol: "TCP"
       name: opendj-389
+    - port: 636
+      targetPort: 636
+      protocol: "TCP"
   selector:
     name: opendj
