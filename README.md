@@ -54,3 +54,4 @@ TODO:
     DJ - certificate in provisioner 
     See https://forgerock.org/openidm/doc/bootstrap/integrators-guide/#import-opendj-cert 
 - Health checks for Deployments
+- Use init containers when 1.3 lands - to initialize postgres before IDM starts

@@ -22,14 +22,14 @@ spec:
           protocol: TCP
         volumeMounts:
           - name: secrets
-            mountPath: /var/secrets
+            mountPath: /var/secrets/opendj
 #            readOnly: true
 #          - name: opendj-disk
 #            mountPath: /opt/opendj/data
       volumes:
         - name: secrets
           secret:
-            secretName: fr-secrets
+            secretName: opendj
 #        - name: opendj-disk
 #          persistentVolumeClaim:
 #            claimName: opendj-storage
