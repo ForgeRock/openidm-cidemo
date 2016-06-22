@@ -13,8 +13,8 @@ node {
 
   stage 'Build image'
 
-  //sh("docker build --no-cache -t ${imageTag} openidm")
-  sh("docker build -t ${imageTag} openidm")
+  sh("docker build --no-cache -t ${imageTag} openidm")
+  //sh("docker build -t ${imageTag} openidm")
 
 
   stage 'Push image to registry'
@@ -28,7 +28,7 @@ node {
  // create this namespace
 
    // create secrets. TODO: How is this different for dev vs prod, etc.
-   sh("kubectl --namespace=${env.BRANCH_NAME} create secret generic opendj --from-file=k8s/secrets/opendj")
+   sh("kubcectl --namespace==${env.BRANCH_NAME} get secret opendj || kubectl --namespace=${env.BRANCH_NAME} create secret generic opendj --from-file=k8s/secrets/opendj")
 
   switch (env.BRANCH_NAME) {
     // canary deployment to production
