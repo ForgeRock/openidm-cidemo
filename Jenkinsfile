@@ -4,14 +4,17 @@ node {
   def appName = 'openidm'
   def feSvcName = "${appName}"
   // Generated image tag - adjust for your environment
-  def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+  //def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+  // for test- we dont use a build number as it just creates a lot of images...
+  def imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}"
   def templateImage = "forgerock/${appName}:template"
 
   checkout scm
 
   stage 'Build image'
 
-  sh("docker build --no-cache -t ${imageTag} openidm")
+  //sh("docker build --no-cache -t ${imageTag} openidm")
+  sh("docker build -t ${imageTag} openidm")
 
 
   stage 'Push image to registry'
@@ -25,7 +28,7 @@ node {
  // create this namespace
 
    // create secrets. TODO: How is this different for dev vs prod, etc.
-   sh("kubectl create secret generic opendj --from-file=k8s/secrets/opendj")
+   sh("kubectl --namespace=${env.BRANCH_NAME} create secret generic opendj --from-file=k8s/secrets/opendj")
 
   switch (env.BRANCH_NAME) {
     // canary deployment to production

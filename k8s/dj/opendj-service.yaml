@@ -11,5 +11,6 @@ spec:
     - port: 636
       targetPort: 636
       protocol: "TCP"
+      name: opendj-636
   selector:
     name: opendj
