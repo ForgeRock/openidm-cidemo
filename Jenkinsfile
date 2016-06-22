@@ -13,8 +13,8 @@ node {
 
   stage 'Build image'
 
-  sh("docker build --no-cache -t ${imageTag} openidm")
-  //sh("docker build -t ${imageTag} openidm")
+  //sh("docker build --no-cache -t ${imageTag} openidm")
+  sh("docker build -t ${imageTag} openidm")
 
 
   stage 'Push image to registry'
